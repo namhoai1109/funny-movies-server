@@ -5,5 +5,7 @@ type Link struct {
 	Url    string `json:"url" gorm:"default:NULL"`
 	UserID int    `json:"user_id" gorm:"default:NULL"`
 
+	User *User `json:"user" gorm:"foreignKey:UserID"`
+
 	Base
 }

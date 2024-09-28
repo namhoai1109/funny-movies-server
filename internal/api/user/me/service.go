@@ -1,4 +1,4 @@
-package user
+package me
 
 import (
 	dbutil "funnymovies/util/db"
@@ -6,13 +6,16 @@ import (
 	"gorm.io/gorm"
 )
 
-type AuthenUser struct {
+type Me struct {
 	db             *gorm.DB
 	userRepository UserRepository
 }
 
-func New(db *gorm.DB, userRepository UserRepository) *AuthenUser {
-	return &AuthenUser{
+func New(
+	db *gorm.DB,
+	userRepository UserRepository,
+) *Me {
+	return &Me{
 		db:             db,
 		userRepository: userRepository,
 	}

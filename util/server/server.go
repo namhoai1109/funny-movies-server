@@ -3,12 +3,14 @@ package server
 import (
 	"context"
 	"fmt"
+	"funnymovies/util/secure"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 )
 
@@ -48,6 +50,9 @@ func New(cfg *Config) *echo.Echo {
 	cfg.fillDefaults()
 	e := echo.New()
 
+	e.Use(middleware.RecoverWithConfig(middleware.RecoverConfig{LogLevel: log.ERROR}),
+		secure.Headers(), secure.CORS(&secure.Config{AllowOrigins: cfg.AllowOrigins}))
+	e.Validator = NewValidator()
 	e.HTTPErrorHandler = NewErrorHandler(e).Handle
 	e.Binder = NewBinder()
 	e.Logger.SetLevel(log.DEBUG)

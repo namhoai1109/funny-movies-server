@@ -4,9 +4,12 @@ import (
 	"fmt"
 	"funnymovies/config"
 	dbutil "funnymovies/util/db"
+	jwtutil "funnymovies/util/jwt"
 	"funnymovies/util/server"
 
 	authenuser "funnymovies/internal/api/authen/user"
+	userautho "funnymovies/internal/api/user/autho"
+	userme "funnymovies/internal/api/user/me"
 	userrepository "funnymovies/internal/repository/user"
 )
 
@@ -33,15 +36,24 @@ func main() {
 		Port: cfg.Port,
 	})
 
+	// --- authorization
+	userAuthoService := userautho.New()
+
 	// --- repository
 	userRepository := userrepository.NewRepository()
 
-	// -- controller
-	authenUserController := authenuser.New(db, userRepository)
+	// -- service
+	jwtUserService := jwtutil.New(cfg.JwtUserAlgo, cfg.JwtUserSecret, cfg.JwtUserDuration)
+	authenUserService := authenuser.New(db, userRepository, jwtUserService)
+	userMeService := userme.New(db, userRepository)
 
 	// --route
 	authenRouter := e.Group("/authen")
-	authenuser.NewRoute(authenUserController, authenRouter.Group("/user"))
+	authenuser.NewRoute(authenUserService, authenRouter.Group("/user"))
+
+	userRouter := e.Group("/user")
+	userRouter.Use(jwtUserService.MiddlewareFunction())
+	userme.NewRoute(userMeService, userAuthoService, userRouter.Group("/me"))
 
 	server.Start(e)
 }

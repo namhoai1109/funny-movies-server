@@ -5,10 +5,9 @@ import "github.com/labstack/echo/v4"
 // AuthToken holds authentication token details with refresh token
 // swagger:model
 type AuthToken struct {
-	AccessToken  string `json:"access_token,omitempty"`
-	TokenType    string `json:"token_type,omitempty"`
-	ExpiresIn    int    `json:"expires_in,omitempty"`
-	RefreshToken string `json:"refresh_token,omitempty"`
+	AccessToken string `json:"access_token,omitempty"`
+	TokenType   string `json:"token_type,omitempty"`
+	ExpiresIn   int    `json:"expires_in,omitempty"`
 }
 
 // RefreshToken  represents data stored in JWT token for refresh token
@@ -17,8 +16,8 @@ type RefreshToken struct {
 }
 
 type AuthoUser struct {
-	ID       int
-	Username string
+	ID    int
+	Email string
 }
 
 // AuthFile represents auth interface
@@ -27,6 +26,6 @@ type Autho interface {
 }
 
 type UserTokenClaims struct {
-	ID       int    `json:"id"`
-	Username string `json:"username"`
+	ID    int    `json:"id"`
+	Email string `json:"email"`
 }

@@ -18,7 +18,7 @@ var (
 
 // BasicTokenData model
 type BasicTokenData struct {
-	UserName string `json:"username"`
+	Email    string `json:"email"`
 	Password string `json:"password"`
 }
 
@@ -119,6 +119,7 @@ func (j *Service) GenerateToken(claims map[string]interface{}, expire *time.Time
 		expTime := time.Now().Add(j.duration)
 		expire = &expTime
 	}
+
 	claims["exp"] = expire.Unix()
 
 	token := jwt.NewWithClaims(j.algo, jwt.MapClaims(claims))

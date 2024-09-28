@@ -3,6 +3,7 @@ package migration
 import (
 	"fmt"
 	"funnymovies/config"
+	"funnymovies/internal/model"
 	dbutil "funnymovies/util/db"
 	migrationutil "funnymovies/util/migration"
 
@@ -45,15 +46,21 @@ func Run() (respErr error) {
 
 	migrationutil.Run(db, []*gormigrate.Migration{
 		{
-			ID: "202311091504",
+			ID: "202428090942",
 			Migrate: func(tx *gorm.DB) error {
-				if err := tx.AutoMigrate(); err != nil {
+				if err := tx.AutoMigrate(
+					&model.User{},
+					&model.Link{},
+				); err != nil {
 					return err
 				}
 				return nil
 			},
 			Rollback: func(tx *gorm.DB) error {
-				return tx.Migrator().DropTable()
+				return tx.Migrator().DropTable(
+					"user",
+					"link",
+				)
 			},
 		},
 	})

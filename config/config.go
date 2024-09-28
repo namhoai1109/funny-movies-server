@@ -7,8 +7,11 @@ import (
 )
 
 type Configuration struct {
-	Port  int    `env:"PORT"`
-	DbDsn string `env:"DB_DSN"`
+	Port            int    `env:"PORT"`
+	DbDsn           string `env:"DB_DSN"`
+	JwtUserAlgo     string `env:"JWT_USER_ALGO"`
+	JwtUserSecret   string `env:"JWT_USER_SECRET"`
+	JwtUserDuration int    `env:"JWT_USER_DURATION"`
 }
 
 func Load() (*Configuration, error) {
