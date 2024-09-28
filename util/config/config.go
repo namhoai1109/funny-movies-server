@@ -6,7 +6,16 @@ import (
 )
 
 // Load loads configuration from local .env file
-func Load(out interface{}) error {
+func Load(stage string, out interface{}) error {
+	if stage == "local" {
+		return LoadLocal(out)
+	}
+
+	return LoadENV(out)
+}
+
+// Load loads configuration from local .env file
+func LoadLocal(out interface{}) error {
 	if err := godotenv.Load(".env"); err != nil {
 		return err
 	}
@@ -16,4 +25,9 @@ func Load(out interface{}) error {
 	}
 
 	return nil
+}
+
+func LoadENV(out interface{}) error {
+
+	return env.Parse(out)
 }

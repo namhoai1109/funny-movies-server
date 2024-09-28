@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"funnymovies/config"
 	dbutil "funnymovies/util/db"
 	"funnymovies/util/server"
@@ -14,6 +15,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Loaded config!")
 
 	db, err := dbutil.New(cfg.DbDsn, true)
 	if err != nil {
@@ -24,6 +26,7 @@ func main() {
 		panic(err)
 	}
 	defer sqlDB.Close()
+	fmt.Println("db connected: " + db.Name())
 
 	// * Initialize HTTP server
 	e := server.New(&server.Config{
