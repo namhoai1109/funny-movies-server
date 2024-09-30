@@ -9,3 +9,15 @@ type User struct {
 
 	Base
 }
+
+type UserResponse struct {
+	ID    int    `json:"id"`
+	Email string `json:"email"`
+}
+
+func (u *User) ToResponse() *UserResponse {
+	return &UserResponse{
+		ID:    u.ID,
+		Email: u.Email,
+	}
+}

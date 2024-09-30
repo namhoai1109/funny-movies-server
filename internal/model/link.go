@@ -9,3 +9,23 @@ type Link struct {
 
 	Base
 }
+
+type LinkResponse struct {
+	ID   int           `json:"id"`
+	Url  string        `json:"url"`
+	User *UserResponse `json:"user"`
+}
+
+func (l *Link) ToResponse() *LinkResponse {
+	userRes := &UserResponse{}
+
+	if l.User != nil {
+		userRes = l.User.ToResponse()
+	}
+
+	return &LinkResponse{
+		ID:   l.ID,
+		Url:  l.Url,
+		User: userRes,
+	}
+}

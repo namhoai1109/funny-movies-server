@@ -14,7 +14,7 @@ type Route struct {
 }
 
 type Service interface {
-	View(ctx context.Context, authoUser *model.AuthoUser) (*MeResponse, error)
+	View(ctx context.Context, authoUser *model.AuthoUser) (*model.UserResponse, error)
 }
 
 func NewRoute(service Service, autho model.Autho, echoGroup *echo.Group) {

@@ -8,8 +8,11 @@ import (
 	"funnymovies/util/server"
 
 	authenuser "funnymovies/internal/api/authen/user"
+	publiclink "funnymovies/internal/api/public/link"
 	userautho "funnymovies/internal/api/user/autho"
+	userlink "funnymovies/internal/api/user/link"
 	userme "funnymovies/internal/api/user/me"
+	linkrepository "funnymovies/internal/repository/link"
 	userrepository "funnymovies/internal/repository/user"
 )
 
@@ -41,19 +44,25 @@ func main() {
 
 	// --- repository
 	userRepository := userrepository.NewRepository()
+	linkRepository := linkrepository.NewRepository()
 
 	// -- service
 	jwtUserService := jwtutil.New(cfg.JwtUserAlgo, cfg.JwtUserSecret, cfg.JwtUserDuration)
 	authenUserService := authenuser.New(db, userRepository, jwtUserService)
 	userMeService := userme.New(db, userRepository)
+	userLinkService := userlink.New(db, linkRepository)
+	publicLinkService := publiclink.New(db, linkRepository)
 
 	// --route
 	authenRouter := e.Group("/authen")
-	authenuser.NewRoute(authenUserService, authenRouter.Group("/user"))
+	authenuser.NewRoute(authenUserService, authenRouter.Group("/users"))
 
-	userRouter := e.Group("/user")
+	userRouter := e.Group("/users")
 	userRouter.Use(jwtUserService.MiddlewareFunction())
 	userme.NewRoute(userMeService, userAuthoService, userRouter.Group("/me"))
+	userlink.NewRoute(userLinkService, userAuthoService, userRouter.Group("/links"))
+
+	publiclink.NewRoute(publicLinkService, e.Group("/links"))
 
 	server.Start(e)
 }
