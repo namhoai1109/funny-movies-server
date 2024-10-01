@@ -37,6 +37,7 @@ func (s *WebSocket) HandleConnection(c echo.Context) error {
 		return err
 	}
 
+	fmt.Println("Client connected: ", ws.RemoteAddr())
 	s.Clients[ws] = true
 	return nil
 }
