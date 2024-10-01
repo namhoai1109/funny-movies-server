@@ -19,6 +19,8 @@ github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keL
 github.com/golang-jwt/jwt v3.2.2+incompatible/go.mod h1:8pz2t5EyA70fFQQSrl6XZXzqecmYZeUEB8OUGHkxJ+I=
 github.com/golang-jwt/jwt/v4 v4.5.0 h1:7cYmW1XlMY7h7ii7UhUyChSgS5wUJEnm9uZVTGqOWzg=
 github.com/golang-jwt/jwt/v4 v4.5.0/go.mod h1:m21LjoU+eqJr34lmDMbreY2eSTRJ1cv77w39/MY0Ch0=
+github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aNNg=
+github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/imdatngo/gowhere v1.1.3 h1:0xgLOzuaniHDlLhAd+j6GtfibEoEnyVK0wdB1aXqbQs=
 github.com/imdatngo/gowhere v1.1.3/go.mod h1:cwfyrc7xDejXjmZekhrN2b/si8qYsvqVsT64t9MMhMk=
 github.com/imdatngo/mergo v0.3.12 h1:V78apoNehyEVXuBgX6w5VkvvQ0pU5NQq0dQqrWJP0BY=

@@ -8,6 +8,7 @@ require (
 	github.com/go-gormigrate/gormigrate/v2 v2.1.3
 	github.com/go-playground/validator/v10 v10.22.1
 	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/gorilla/websocket v1.5.3
 	github.com/imdatngo/gowhere v1.1.3
 	github.com/imdatngo/mergo v0.3.12
 	github.com/joho/godotenv v1.5.1

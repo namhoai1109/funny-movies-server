@@ -6,6 +6,7 @@ import (
 	dbutil "funnymovies/util/db"
 	jwtutil "funnymovies/util/jwt"
 	"funnymovies/util/server"
+	websocketutil "funnymovies/util/websocket"
 
 	authenuser "funnymovies/internal/api/authen/user"
 	publiclink "funnymovies/internal/api/public/link"
@@ -39,6 +40,12 @@ func main() {
 		Port: cfg.Port,
 	})
 
+	// --- websocket
+	fmt.Println("Start websocket...")
+	ws := websocketutil.New()
+	e.GET("/ws", ws.HandleConnection)
+	go ws.HandleMessage()
+
 	// --- authorization
 	userAuthoService := userautho.New()
 
@@ -50,7 +57,7 @@ func main() {
 	jwtUserService := jwtutil.New(cfg.JwtUserAlgo, cfg.JwtUserSecret, cfg.JwtUserDuration)
 	authenUserService := authenuser.New(db, userRepository, jwtUserService)
 	userMeService := userme.New(db, userRepository)
-	userLinkService := userlink.New(db, linkRepository)
+	userLinkService := userlink.New(db, linkRepository, ws)
 	publicLinkService := publiclink.New(db, linkRepository)
 
 	// --route
