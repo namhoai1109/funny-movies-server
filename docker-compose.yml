@@ -2,7 +2,7 @@ version: "3"
 services:
   db:
     platform: linux/x86_64
-    image: postgres:13
+    image: postgres:14
     container_name: funnymovies.db
     ports:
       - "5432:5432"

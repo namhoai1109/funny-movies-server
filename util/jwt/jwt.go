@@ -72,6 +72,7 @@ func (j *Service) MiddlewareFunction(services ...*Service) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			token, err := j.parseTokenFromHeader(c)
+			fmt.Println("token ", token)
 			if err != nil || !token.Valid {
 				for _, svc := range services {
 					if svc == nil {
